@@ -4,6 +4,8 @@ version := "0.0.1"
 
 scalaVersion := "2.11.7"
 
+scalacOptions in Global ++= Seq("-deprecation")
+
 lazy val macros_implementations = project
 
 lazy val root = (project in file(".")).aggregate(macros_implementations).dependsOn(macros_implementations)
