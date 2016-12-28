@@ -1,3 +1,5 @@
+.ensime_cache
+.ensime
 .classpath
 .project
 .settings/
