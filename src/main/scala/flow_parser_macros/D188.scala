@@ -1,6 +1,6 @@
 package flow_parser_macros
 
-import flow_parser_macros_impl.{Flow, FlowParser}
+import flow_parser_macros_impl.FlowParser
 
 @FlowParser
 object D188

@@ -30,7 +30,7 @@ class ParsingSpec extends FunSpec with Matchers {
   describe("A multiline parser") {
     it("should parse multiple lines with different kinds of line breaks") {
       val testData = "386|1|2|\n386|1|2|\r386|1|2|\r\n386|1|2|"
-      val Parsed.Success(value, index) = multiLine(lineParser("386", 2)).parse(testData)
+      val Parsed.Success(value, index) = multiLineParser(lineParser("386", 2)).parse(testData)
       value should equal(Seq.fill(4)(Seq("1", "2")))
         
     }
