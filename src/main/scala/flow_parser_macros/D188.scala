@@ -1,9 +1,6 @@
 package flow_parser_macros
 
-import flow_parser_macros_impl.FlowParser
-
-trait Flow {
-}
+import flow_parser_macros_impl.{Flow, FlowParser}
 
 @FlowParser
-case class D188() extends Flow
+object D188

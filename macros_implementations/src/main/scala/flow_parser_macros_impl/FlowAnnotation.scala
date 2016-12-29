@@ -12,31 +12,52 @@ object FlowParser {
   def impl(c: Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
     import c.universe._
 
-    val result = {
+    val tree = {
       annottees.map(_.tree).toList match {
-        case q"$mods class $tpname[..$tparams] $ctorMods(...$paramss) extends Flow with ..$parents { $self => ..$stats }" :: Nil => {
+        case q"$mods object $tpname extends $parent with ..$parents { $self => ..$stats }" :: Nil => {
           val flowType = tpname.toString
-          val groups = FlowDescription.d188.allGroups
+          val groups = FlowDescription(flowType).toSeq.flatMap(_.allGroups)
           val classDefs = groups.map(group => {
             val className = TypeName("Group" + group.id)
             val termNames = (1 to group.columns).map(n => TermName(s"field$n"))
-            val params = termNames.map(tn => (q"$tn: String"))
+            val columnParams = termNames.map(tn => (q"$tn: String"))
+            val subGroupParams: IndexedSeq[Tree] = group.subGroups.toIndexedSeq.map(sg => {
+              val tn = TermName(s"g${sg.id}")
+              val tpN = TypeName(s"Group${sg.id}")
+              q"$tn: Seq[$tpN]"
+            })
+            val params = columnParams ++ subGroupParams
             val classDef = q"case class $className(..$params)"
             classDef
           })
           
-          
-          
-          q"""$mods class $tpname[..$tparams] $ctorMods(...$paramss) extends Flow with ..$parents {
-            def flowType: String = {
-              $flowType
-            }
-            ..$classDefs
-          }"""
+          q"""$mods object $tpname extends $parent with ..$parents {
+                $self =>
+              
+                def flowType: String = $flowType
+            
+                ..$classDefs
+            
+                ..$stats
+              }"""
         }
-        case _ => c.abort(c.enclosingPosition, "Annotation @FlowParser can be used only with case classes which extends Animal trait")
+        case _ => c.abort(c.enclosingPosition, "Annotation @FlowParser can only be used with objects")
       }
     }
-    c.Expr[Any](result)
+    c.Expr[Any](tree)
   }
+}
+
+object Parsing {
+  import fastparse.all._
+    
+  def lineParser(groupId: String, columns: Int):Parser[Seq[String]] = {
+    P(groupId ~/ ("|" ~/ (!"|" ~ AnyChar).rep(1).!).rep(exactly = columns) ~/ "|")
+  }
+  
+  def multiLine[A](p: Parser[A]):Parser[Seq[A]] = {
+    val lineBreak: Parser[Unit] = ("\r\n" | "\n\r" | "\n" | "\r")
+    p.rep(min = 0, sep = lineBreak)
+  }
+  
 }

@@ -1,6 +1,11 @@
 package flow_parser_macros_impl
 
 object FlowDescription {
+  def apply(name: String): Option[Group] = name match {
+    case "D188" => Some(d188)
+    case _ => None
+  }
+  
   val d188: Group = Group(386, "Customer Payment Details", 15, Seq(Group(387, "MeterRegisterDetailPerMeter", 3, Seq.empty)))
   
   /*
@@ -16,4 +21,7 @@ case class Group(id: Int, description:String, columns: Int, subGroups: Seq[Group
   def allGroups:Seq[Group] = this :: subGroups.toList.flatMap(_.allGroups)
 }
 
+
+trait Flow {
+}
 
