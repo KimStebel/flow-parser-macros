@@ -6,11 +6,9 @@ object FlowDescription {
     case _ => None
   }
   
-  val d188: FlowGroup = FlowGroup(386, "Customer Payment Details", (1 to 15).map(n => ("field" + n) -> StringField), Seq(
-                      FlowGroup(387, "MeterRegisterDetailPerMeter", (1 to 3).map(n => ("field" + n) -> StringField), Seq.empty)
-                    ))
-  
-  //case class G386(f1 .. f15: String, g387s: Seq[G387])
+  val d188: FlowGroup =
+    FlowGroup(386, "CustomerPaymentDetails", (Seq("foo") ++ (2 to 15).map(n => ("field" + n))).map(_ -> StringField), Seq(
+      FlowGroup(387, "MeterRegisterDetailPerMeter", Seq("meterRegisterId", "registerReading", "prepaymentUnitRate").map(_ -> StringField), Seq.empty)))
   
 }
 
