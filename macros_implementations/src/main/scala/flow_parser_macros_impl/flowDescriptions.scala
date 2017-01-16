@@ -5,11 +5,30 @@ object FlowDescription {
     case "D188" => Some(d188)
     case _ => None
   }
+
   
-  val d188: FlowGroup =
-    FlowGroup(386, "CustomerPaymentDetails", (Seq("foo") ++ (2 to 15).map(n => ("field" + n))).map(_ -> StringField), Seq(
+  val d188: FlowGroup = {
+    val fieldNames = Seq(
+      "keyMeterSupplierOrCustomerId",
+      "keyChargingMachineNumber",
+      "terminalTransactionNumber",
+      "customerPaymentDate",
+      "customerPaymentAmount",
+      "meterIdSerialNumber",
+      "standingCharge",
+      "debtRecoveryRate",
+      "activeCreditOnKey",
+      "keyDebt",
+      "keyDateStamp",
+      "readingDateAndTime",
+      "totalCreditAccepted",
+      "creditBalance",
+      "mpanCore"
+    )
+    FlowGroup(386, "CustomerPaymentDetails", fieldNames.map(_ -> StringField), Seq(
       FlowGroup(387, "MeterRegisterDetailPerMeter", Seq("meterRegisterId", "registerReading", "prepaymentUnitRate").map(_ -> StringField), Seq.empty)))
-  
+  }
+    
 }
 
 sealed trait FieldType {
