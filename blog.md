@@ -1,8 +1,6 @@
 # Generating parsers with Scala macros
 
-// what are scala macros and what are they used for
-// def macros versus macro annotations
-// macro paradise
+Macros are functions that run at compile time to generate code. [Scala macros](http://scalamacros.org/) are written in Scala itself using an API that lets you inspect and create [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree). Using [quasiquotes](http://docs.scala-lang.org/overviews/quasiquotes/intro.html), this can be as easy as inserting a value into a code template. Vanilla Scala only supports [def macros](http://docs.scala-lang.org/overviews/macros/overview), which let you generate methods. With the [macro paradise compiler plugin](http://docs.scala-lang.org/overviews/macros/paradise) you can also generate or modify classes and objects. For a good overview of macro use cases, have a look at [Eugene Burmako's "What Are Macros Good For?" slides](http://scalamacros.org/paperstalks/2013-07-17-WhatAreMacrosGoodFor.pdf). In this post, I will not cover all possible uses of Scala macros or give a comprehensive overview. Instead, I will walk you through a solution to a specific problem: Generating parsers for custom file formats.
 
 ## The problem: Parsing energy industry flows
 
@@ -16,5 +14,6 @@
 ### File format spec
 ### Generating case classes
 ### Generating parsers
+### Problems and future improvements
 
 ## Summary
