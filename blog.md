@@ -12,9 +12,9 @@ Recently I've started working for Ovo Energy. In the energy industry, companies 
 The "flow structure" table at https://dtc.mrasco.com/DataFlow.aspx?FlowCounter=0188&FlowVers=1&searchMockFlows=False describes two groups, "customer payment details" and "meter register detail per meter". The first group has 15 data items while the second group has 3. The "range" column tells us that for each D0188 file, there can be one to n entries of the first group, and for each such entry, there can be 1 to n instances of the second group. All file formats we're dealing with are text based and group entries are always represented as pipe separated values on a single line starting with the group number (in this case, 386 or 387). Here is some sample data:
 
 ```
-386|44000000000001004000|20463|8100|20160922|20.00|S12A07953|17.25|0.00|0.00|0.00|20101101120000|20160919120000|759.00|-1.94|1200023528780|
+386|44000000000001004000|20463|8100|20160922|20.00|S12A12345|17.25|0.00|0.00|0.00|20101101120000|20160919120000|759.00|-1.94|1200023528780|
 387|1|8924.0|14.95|
-386|44000000000002562000|347065|6948|20160922|10.00|S07X46677|17.23|0.00|0.00|0.00|20101101120000|20160919120000|11816.00|48.07|1413355260002|
+386|44000000000002562000|347065|6948|20160922|10.00|S07X56789|17.23|0.00|0.00|0.00|20101101120000|20160919120000|11816.00|48.07|1413355260002|
 387|1|59414.0|18.12|
 387|2|38935.0|6.62|
 ```
@@ -59,11 +59,11 @@ object Foo {
 }
 ```
 
-... the AST of the object will be passed as an expression to the macro implementation. The macro can then use quasiquotes to pattern match on the annotated code and extract pieces of it such as the name of the object, its superclass, traits it is inheriting from and definitions in the class body. The return value of the macro is the expression the annotated class should be replaced with. In our example, the macro annotation simply puts the pieces of the object back together and returns it unchanged.
+... the AST of the object will be passed as an expression to the macro implementation. The macro can then use quasiquotes to pattern match on the annotated code and extract pieces of it such as the name of the object, its superclass, traits it is inheriting from, and definitions in the class body. The macro returns an expression that will replace the annotated class. In our example, it simply puts the pieces of the object back together and returns it unchanged.
 
 ### File format spec
 
-To give the macro something to do, we first need a description of the data formats we want to create parsers for.
+To give the macro something to do we first need a description of the data formats we want to create parsers for.
 
 ```
 
