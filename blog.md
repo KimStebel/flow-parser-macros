@@ -23,7 +23,7 @@ In this example, we have two group 386s entries, the first one has one 387 entry
 
 ### Let's just write some parsers?
 
-If we just had a few of these data formats, creating custom case classes to hold the data and using parser combinators to create parsers for them would be a decent solution. But for large numbers of data formats this quickly becomes tedious and error prone. If you wanted to make changes to the way files are parsed, for example to the way errors are handled, you'd probably have to make those changes in all of your 200 parsers.
+If we just had a few of these data formats, creating custom case classes to hold the data and using parser combinators to create parsers for them would work fine, but for large numbers of data formats it quickly becomes tedious and error prone. If you wanted to make changes to the way files are parsed, for example to the way errors are handled, you'd probably have to make those changes in all of your 200 parsers.
 
 ## Macros! Type providers!
 
